@@ -14,7 +14,7 @@ const Benefits: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-              Por que escolher o <span className="text-brand-vivid">ESTOMAPRO</span>?
+              Por que escolher o ESTOMA<span className="text-brand-vivid">PRO</span>?
             </h2>
             <p className="text-gray-200 text-lg leading-relaxed font-light">
               Solução completa que une segurança de dados, mobilidade e eficiência operacional.

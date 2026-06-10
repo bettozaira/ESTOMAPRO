@@ -2,7 +2,11 @@ import React from 'react';
 import Button from './Button';
 import { ChevronRight, ShieldCheck, Star } from 'lucide-react';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  onNavigate?: (page: string) => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   return (
     <section id="home" className="relative lg:h-screen min-h-[700px] flex items-center justify-center overflow-hidden bg-brand-black">
       
@@ -45,10 +49,12 @@ const Hero: React.FC = () => {
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 w-full justify-center animate-fade-up" style={{ animationDelay: '0.3s' }}>
           {/* Botão Acentuado com Verde Vivo */}
-          <Button variant="accent" className="text-lg min-w-[200px] shadow-glow">
+          <Button variant="accent" className="text-lg min-w-[200px] shadow-glow" onClick={() => onNavigate?.('login')}>
             Acessar App
           </Button>
-          <Button variant="outline" className="text-lg min-w-[200px] flex items-center justify-center gap-2 group">
+          <Button variant="outline" className="text-lg min-w-[200px] flex items-center justify-center gap-2 group" onClick={() => {
+            document.querySelector('#features')?.scrollIntoView({ behavior: 'smooth' });
+          }}>
             Ver Recursos
             <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </Button>

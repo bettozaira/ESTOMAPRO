@@ -1,9 +1,20 @@
-import React from 'react';
-import { Facebook, Instagram, Linkedin, Mail, Phone, Activity } from 'lucide-react';
+import React, { useState } from 'react';
+import { Facebook, Instagram, Linkedin, Mail, Phone, Activity, X } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  const [modalType, setModalType] = useState<'help' | 'privacy' | 'terms' | null>(null);
+
+  const handleOpenModal = (e: React.MouseEvent, type: 'help' | 'privacy' | 'terms') => {
+    e.preventDefault();
+    setModalType(type);
+  };
+
+  const handleCloseModal = () => {
+    setModalType(null);
+  };
+
   return (
-    <footer id="footer" className="bg-brand-black text-gray-400 pt-20 pb-10 border-t border-brand-dark/20">
+    <footer id="footer" className="bg-brand-black text-gray-400 pt-20 pb-10 border-t border-brand-dark/20 relative">
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
@@ -39,9 +50,9 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-white font-bold mb-6">Suporte</h4>
             <ul className="space-y-3 text-sm">
-              <li><a href="#" className="hover:text-brand-vivid transition-colors">Central de Ajuda</a></li>
-              <li><a href="#" className="hover:text-brand-vivid transition-colors">Política de Privacidade</a></li>
-              <li><a href="#" className="hover:text-brand-vivid transition-colors">Termos de Uso</a></li>
+              <li><a href="#" id="link-help" onClick={(e) => handleOpenModal(e, 'help')} className="hover:text-brand-vivid transition-colors">Central de Ajuda</a></li>
+              <li><a href="#" id="link-privacy" onClick={(e) => handleOpenModal(e, 'privacy')} className="hover:text-brand-vivid transition-colors">Política de Privacidade</a></li>
+              <li><a href="#" id="link-terms" onClick={(e) => handleOpenModal(e, 'terms')} className="hover:text-brand-vivid transition-colors">Termos de Uso</a></li>
             </ul>
           </div>
 
@@ -55,7 +66,15 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-brand-vivid" />
-                <span>+55 (11) 99999-9999</span>
+                <a 
+                  id="phone-contact"
+                  href="https://wa.me/5585992304325" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-brand-vivid transition-colors"
+                >
+                  +55 (85) 99230-4325
+                </a>
               </li>
             </ul>
           </div>
@@ -69,6 +88,86 @@ const Footer: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Elegant Local Modal */}
+      {modalType && (
+        <div 
+          id="info-modal-backdrop" 
+          className="fixed inset-0 bg-brand-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
+          onClick={handleCloseModal}
+        >
+          <div 
+            id="info-modal-container" 
+            className="bg-white text-brand-black rounded-2xl max-w-lg w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl border border-gray-100"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-6 pb-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+              <h3 className="font-bold text-lg text-brand-black">
+                {modalType === 'help' && "Central de Ajuda"}
+                {modalType === 'privacy' && "Política de Privacidade"}
+                {modalType === 'terms' && "Termos de Uso"}
+              </h3>
+              <button 
+                id="info-modal-close"
+                onClick={handleCloseModal}
+                className="text-gray-400 hover:text-brand-black p-1.5 rounded-full hover:bg-gray-200 transition-all"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 overflow-y-auto space-y-4 text-sm text-gray-600 leading-relaxed">
+              {modalType === 'help' && (
+                <div className="space-y-4">
+                  <p>O ESTOMAPRO foi desenvolvido para auxiliar profissionais de enfermagem no registro, acompanhamento e documentação da evolução de lesões.</p>
+                  <p className="font-semibold text-brand-black mb-1">Principais funcionalidades:</p>
+                  <ul className="list-disc pl-5 space-y-1.5 text-gray-500">
+                    <li>Cadastro de pacientes</li>
+                    <li>Agendamento de atendimentos</li>
+                    <li>Registro de evolução clínica</li>
+                    <li>Galeria fotográfica</li>
+                    <li>Relatórios profissionais</li>
+                    <li>Armazenamento seguro de informações</li>
+                  </ul>
+                  <p className="pt-2 border-t border-gray-100">Em caso de dúvidas ou sugestões, entre em contato através do WhatsApp disponível na plataforma.</p>
+                </div>
+              )}
+
+              {modalType === 'privacy' && (
+                <div className="space-y-4">
+                  <p>O ESTOMAPRO respeita a privacidade dos seus usuários.</p>
+                  <p>As informações cadastradas são utilizadas exclusivamente para fins de registro clínico e gerenciamento profissional.</p>
+                  <p>Os dados armazenados não são compartilhados com terceiros sem autorização do usuário.</p>
+                  <p>O sistema adota medidas de segurança para proteger as informações registradas e garantir a confidencialidade dos dados.</p>
+                  <p className="text-gray-400 text-xs">Esta política poderá ser atualizada conforme a evolução do projeto.</p>
+                </div>
+              )}
+
+              {modalType === 'terms' && (
+                <div className="space-y-4">
+                  <p>O ESTOMAPRO é uma ferramenta de apoio ao registro e gerenciamento de informações clínicas.</p>
+                  <p>A responsabilidade pelas informações inseridas no sistema é exclusivamente do profissional usuário.</p>
+                  <p>O sistema não substitui protocolos clínicos, pareceres técnicos ou decisões profissionais.</p>
+                  <p>Ao utilizar a plataforma, o usuário concorda com estes termos e compromete-se a utilizar o sistema de forma ética e responsável.</p>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 bg-gray-50 border-t border-gray-100 flex justify-end">
+              <button 
+                id="info-modal-ok"
+                onClick={handleCloseModal}
+                className="px-5 py-2.5 bg-brand-dark hover:bg-brand-mid text-white rounded-lg font-medium text-xs transition-colors"
+              >
+                Concluído
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </footer>
   );
 };

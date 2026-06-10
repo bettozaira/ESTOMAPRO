@@ -46,9 +46,9 @@ const App: React.FC = () => {
       default:
         return (
           <main>
-            <Hero />
+            <Hero onNavigate={navigateTo} />
             <Features />
-            <HowItWorks />
+            <HowItWorks onNavigate={navigateTo} />
             <Benefits />
             <Testimonials />
             
@@ -65,7 +65,7 @@ const App: React.FC = () => {
                    <Button variant="primary" className="text-lg px-10 py-4 shadow-xl hover:-translate-y-1" onClick={() => navigateTo('signup')}>
                      Cadastre-se
                    </Button>
-                   <Button variant="secondary" className="text-lg px-10 py-4">
+                   <Button variant="secondary" className="text-lg px-10 py-4" onClick={() => window.open('https://wa.me/5585992304325?text=Olá,%20gostaria%20de%20conhecer%20o%20ESTOMAPRO.', '_blank')}>
                      Falar com Consultor
                    </Button>
                  </div>
